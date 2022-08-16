@@ -45,14 +45,21 @@ public class Scene : MonoBehaviour
         // bottom right 
         this.debug.Ray(new Ray(Vector3.zero, NormalizedImageToWorldCoord(1f, 1f)), Color.blue);
 
-        // white line at pixel(1,1)
-        this.debug.Ray(new Ray(Vector3.zero, NormalizedImageToWorldCoordWhite(0f, 0f)), Color.white);
+        // white line 
+        for (var i=0; i<this.image.Width; i++) { 
+            print("i=" + i);
+            for (var j=0; j<this.image.Height; j++) { 
+                print("j=" + j);
+                this.debug.Ray(new Ray(Vector3.zero, NormalizedImageToWorldCoordWhite(i, j)), Color.white);
+            }
+        }
     }
 
     private void Render()
     {
         // Render the image here...
     }
+    
 
     private Vector3 NormalizedImageToWorldCoord(float x, float y)
     {
