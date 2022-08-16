@@ -45,8 +45,8 @@ public class Scene : MonoBehaviour
         // bottom right 
         this.debug.Ray(new Ray(Vector3.zero, NormalizedImageToWorldCoord(1f, 1f)), Color.blue);
 
-        // white line 
-        this.debug.Ray(new Ray(Vector3.zero, NormalizedImageToWorldCoord1(0f, 0f)), Color.white);
+        // white line at pixel(1,1)
+        this.debug.Ray(new Ray(Vector3.zero, NormalizedImageToWorldCoordWhite(0f, 0f)), Color.white);
     }
 
     private void Render()
@@ -62,7 +62,7 @@ public class Scene : MonoBehaviour
             1.0f); // Image plane is 1 unit from camera.
     }
 
-    private Vector3 NormalizedImageToWorldCoord1(float x, float y)
+    private Vector3 NormalizedImageToWorldCoordWhite(float x, float y)
     {
         return new Vector3(
             this._imagePlaneWidth * (x - 0.5f) + this._imagePlaneWidth/this.image.Width/2,
