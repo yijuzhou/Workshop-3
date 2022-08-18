@@ -58,6 +58,33 @@ public class Scene : MonoBehaviour
     private void Render()
     {
         // Render the image here...
+        for (var y = 0; y < this.image.Height; y++)
+        for (var x = 0; x < this.image.Width; x++)
+        {
+            this.image.SetPixel(x, y, Color.black);
+            
+            var ray = PixelRay(x, y);
+            RaycastHit? nearestHit = null;
+            foreach (var sceneEntity in FindObjectsOfType<SceneEntity>())
+            {
+                var hit = sceneEntity.Intersect(ray);
+                if (hit != null && (hit?.distance < nearestHit?.distance || nearestHit == null))
+                {
+                    this.image.SetPixel(x, y, sceneEntity.Color());
+                    nearestHit = hit;
+                }
+            }
+        }
+    }
+
+    private Ray PixelRay(int x, int y)
+    {
+        var normX = (x + 0.5f) / this.image.Width;
+        var normY = (y + 0.5f) / this.image.Height;
+
+        var worldPixelCoord = NormalizedImageToWorldCoord(normX, normY);
+
+        return new Ray(Vector3.zero, worldPixelCoord);
     }
     
 
@@ -93,3 +120,4 @@ public class Scene : MonoBehaviour
         this.image.transform.localScale = new Vector3(this._imagePlaneWidth, this._imagePlaneHeight, 0f);
     }
 }
+
